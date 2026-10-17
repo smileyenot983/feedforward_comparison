@@ -39,18 +39,12 @@
       <div class="viewer-footer"><p>Drag to rotate · Shift + drag to pan · Scroll to zoom. Foreground masks change display only.</p><div><a id="standalone" target="_blank" rel="noopener">Open full viewer ↗</a><button id="copy-link">Copy comparison link</button><span id="copy-status" role="status"></span></div></div>
       <details class="extra-options"><summary>Additional experiments</summary><label><input type="checkbox" id="include-extras"> Include RGB-only, alternate-camera and GGPT variants in the method menus</label><p>These variants use different inputs or evaluation pixels. Their scores appear in separate protocol groups below.</p></details>
       <p id="error" role="alert" hidden></p>
-      <noscript><p>This interactive comparison requires JavaScript. Static previews and saved viewers are included in the scene folders.</p></noscript>
+      <noscript><p>This interactive pointcloud comparison requires JavaScript.</p></noscript>
     </section>
 
     <section class="scene-browser" aria-labelledby="browse-heading">
       <div class="section-heading"><h2 id="browse-heading">Explore the scenes</h2><p>Thumbnails show Pi3X foreground reconstructions.</p></div>
       <div id="thumbnails" class="thumbnails"></div>
-    </section>
-
-    <section class="static-previews" aria-labelledby="preview-heading">
-      <div class="section-heading"><h2 id="preview-heading">Static comparison</h2><div class="preview-tabs" role="group" aria-label="Preview viewpoint"><button data-view="front" aria-pressed="true">Front</button><button data-view="rotated" aria-pressed="false">Rotated</button><button data-view="source" aria-pressed="false">Source views</button></div></div>
-      <p id="preview-description" class="muted">RGB-colored pointclouds from the first-camera side.</p>
-      <div id="previews" class="preview-grid"></div>
     </section>
 
     <section id="metrics" aria-labelledby="metrics-heading">
@@ -81,7 +75,7 @@
         <a href="https://github.com/facebookresearch/vggt-omega">VGGT-Omega <span>Official code ↗</span></a>
       </div>
       <div class="protocol-grid"><div><h3>Camera inputs</h3><p>Primary Pi3X, DA3, MapAnything and pairwise Pow3R runs received CO3D cameras. VGGT-Omega received RGB only. Its primary cloud reprojects predicted depths with CO3D cameras; its alternate cloud uses predicted cameras. These are two displays of the same inference run.</p></div><div><h3>Pointcloud display</h3><p>Clouds combine points from the selected views without surface fusion or smoothing. All methods share one scene display transform, scale and viewpoint. Foreground masks affect display only. Each method retains its saved geometry-validity mask.</p></div></div>
-      <details><summary>Sampling & additional protocol details</summary><p>Clouds were sampled at stride 3 and capped at 60,000 foreground and 20,000 background points per method. These display samples are separate from the evaluation pixels. Static previews use a shared object viewport; use the interactive viewer’s Overview control to inspect distant points.</p><p>RGB-only MapAnything and Pi3X predict their own cameras; CO3D cameras are used afterward for a single similarity alignment and evaluation. GGPT refines Pi3X with matching and camera optimization, retaining corrected XYZ. Its camera-conditioned, RGB-only and fast-matcher variants have separate retained-pixel intersections.</p><p>This public export preserves the original experiment’s pointclouds, previews and scores. It does not substitute later 30-view preprocessing or filtering results.</p></details>
+      <details><summary>Sampling & additional protocol details</summary><p>Clouds were sampled at stride 3 and capped at 60,000 foreground and 20,000 background points per method. These display samples are separate from the evaluation pixels. Use the interactive viewer’s Overview control to inspect distant points.</p><p>RGB-only MapAnything and Pi3X predict their own cameras; CO3D cameras are used afterward for a single similarity alignment and evaluation. GGPT refines Pi3X with matching and camera optimization, retaining corrected XYZ. Its camera-conditioned, RGB-only and fast-matcher variants have separate retained-pixel intersections.</p><p>This public export preserves the original experiment’s pointclouds and scores. It does not substitute later 30-view preprocessing or filtering results.</p></details>
     </section>
   </main>
   <footer>Dataset: <a href="https://github.com/facebookresearch/co3d">Common Objects in 3D (CO3D)</a> · Static WebGL comparison · <a href="README.md">About this export</a></footer>

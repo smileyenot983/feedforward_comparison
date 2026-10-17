@@ -4,7 +4,7 @@
 
 A standalone static comparison of Pi3X, Depth Anything 3, Pow3R, MapAnything and
 VGGT-Omega on 20 CO3D scenes with 10 views per scene. Includes synchronized WebGL
-pointclouds, scene thumbnails, static previews, shareable selections and saved
+pointclouds, scene thumbnails, shareable selections and saved
 metrics grouped by evaluation protocol. Additional RGB-only and GGPT variants
 are available in expandable controls.
 

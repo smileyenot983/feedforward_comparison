@@ -38,12 +38,11 @@ function readState(saved = {}) {
   return {
     scene: scenes.includes(value('scene')) ? value('scene') : scenes[0], left, right,
     region: value('region') === 'all' ? 'all' : 'fg',
-    view: ['front', 'rotated', 'source'].includes(value('view')) ? value('view') : 'front',
     extras: String(value('extras')) === '1' || !gallery.primary.includes(left) || !gallery.primary.includes(right)
   };
 }
 function persist() {
-  const params = new URLSearchParams({scene: state.scene, left: state.left, right: state.right, region: state.region, view: state.view});
+  const params = new URLSearchParams({scene: state.scene, left: state.left, right: state.right, region: state.region});
   if (state.extras) params.set('extras', '1');
   const url = new URL(location.href);
   url.search = params.toString();
@@ -79,21 +78,6 @@ function syncViewer() {
     $('viewer').contentWindow.postMessage({type: 'co3d-controls', left: state.left, right: state.right, region: state.region, extras: state.extras}, location.origin);
   }
 }
-function renderPreviews() {
-  const descriptions = {front: 'RGB-colored pointclouds from the first-camera side.', rotated: 'The same clouds from another angle, with shared framing.', source: 'Each color identifies an input view. Separated layers can reveal misalignment.'};
-  $('preview-description').textContent = descriptions[state.view];
-  document.querySelectorAll('[data-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === state.view)));
-  $('previews').replaceChildren();
-  for (const side of ['left', 'right']) {
-    const key = state[side], figure = node('figure');
-    figure.append(node('figcaption', names[key]));
-    const link = node('a'), image = document.createElement('img');
-    image.src = `${state.scene}/previews/${key}_${state.region}_${state.view}.png`;
-    image.alt = `${state.scene}: ${names[key]}, ${state.region === 'fg' ? 'foreground' : 'whole scene'}, ${state.view} preview`;
-    image.width = image.height = 640; image.loading = 'lazy'; image.decoding = 'async';
-    link.href = image.src; link.append(image); figure.append(link); $('previews').append(figure);
-  }
-}
 function render() {
   fillMethodMenus();
   const index = gallery.scenes.findIndex(item => item.scene === state.scene);
@@ -102,7 +86,7 @@ function render() {
   $('sequence').textContent = state.scene.split('/')[1];
   $('previous').disabled = index === 0; $('next').disabled = index === gallery.scenes.length - 1;
   document.querySelectorAll('.thumbnail').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.scene === state.scene)));
-  persist(); syncViewer(); renderPreviews();
+  persist(); syncViewer();
 }
 function buildScenes() {
   for (const scene of gallery.scenes) {
@@ -180,7 +164,6 @@ async function start() {
     }
     render();
   });
-  document.querySelectorAll('[data-view]').forEach(button => button.addEventListener('click', () => { state.view = button.dataset.view; persist(); renderPreviews(); }));
   $('copy-link').addEventListener('click', async () => {
     try { await navigator.clipboard.writeText(location.href); $('copy-status').textContent = 'Link copied'; }
     catch { $('copy-status').textContent = 'Copy the URL from your browser’s address bar.'; }
