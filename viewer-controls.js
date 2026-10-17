@@ -5,7 +5,20 @@ const embedded = new URLSearchParams(location.search).get('embed') === '1';
 document.documentElement.classList.toggle('embedded', embedded);
 const primaryMethods = ['pi3x', 'da3', 'pow3r', 'map', 'omega'];
 const publicNames = {pi3x:'Pi3X',da3:'DA3',pow3r:'Pow3R (pairs)',map:'MapAnything',omega:'VGGT-Omega',omega_own:'VGGT-Omega · predicted cameras',map_rgb_only:'MapAnything · RGB only',pi3x_rgb_only:'Pi3X · RGB only',ggpt:'Pi3X + GGPT',ggpt_rgb_only:'Pi3X + GGPT · RGB only',ggpt_rgb_only_fast:'Pi3X + GGPT · fast / RGB only'};
-const publicNotes = {omega:'RGB-only inference · depth reprojected with CO3D cameras',omega_own:'RGB-only inference · predicted cameras',map_rgb_only:'RGB-only inference · predicted cameras',pi3x_rgb_only:'RGB-only inference · predicted cameras',ggpt:'RGB + CO3D cameras · SfM-refined cameras',ggpt_rgb_only:'RGB-only inference · SfM-refined cameras',ggpt_rgb_only_fast:'RGB-only inference · RoMaV2-fast / SfM-refined cameras'};
+const publicNotes = {omega:'Images only · shown with known cameras',omega_own:'Images only · estimates its cameras',map_rgb_only:'Images only · estimates its cameras',pi3x_rgb_only:'Images only · estimates its cameras',ggpt:'Images + known cameras · cameras refined',ggpt_rgb_only:'Images only · cameras refined',ggpt_rgb_only_fast:'Images only · fast matching, refined cameras'};
+if (embedded) {
+  for (const side of ['left', 'right']) {
+    const title = document.createElement('h2'); title.className = 'panel-title'; title.id = side + 'Title';
+    $(side).before(title);
+  }
+}
+$('reset').textContent = 'Reset view';
+$('overview').textContent = 'Fit scene';
+$('color').querySelector('[value="rgb"]').textContent = 'Image colors';
+$('color').querySelector('[value="view"]').textContent = 'By input image';
+$('color').parentElement.classList.add('color-control');
+$('frame').parentElement.classList.add('frame-control');
+if ($('cameras').nextSibling) $('cameras').nextSibling.textContent = ' Camera path';
 let includeExtras = requested.get('extras') === '1';
 for (const key of ['left', 'right']) {
   if (requested.has(key) && data.clouds.some(cloud => cloud.method === requested.get(key)) && !primaryMethods.includes(requested.get(key))) includeExtras = true;
@@ -19,7 +32,7 @@ function refreshPublicMenus() {
       if (!includeExtras && !primaryMethods.includes(key)) continue;
       const index = data.clouds.findIndex(cloud => cloud.method === key);
       if (index < 0) continue;
-      const option = new Option(publicNames[key], String(index)); option.title = publicNotes[key] || 'RGB + CO3D cameras · CO3D cloud cameras'; select.add(option);
+      const option = new Option(publicNames[key], String(index)); option.title = publicNotes[key] || 'Images + known cameras'; select.add(option);
     }
     const valid = Array.from(select.options).some(option => option.value === current);
     select.value = valid ? current : String(data.clouds.findIndex(cloud => cloud.method === (id === 'leftModel' ? 'pi3x' : 'omega')));
@@ -29,7 +42,9 @@ function refreshPublicMenus() {
 function refreshPublicContext() {
   for (const id of ['leftModel', 'rightModel']) {
     const key = data.clouds[Number($(id).value)].method;
-    $(id + '-context').textContent = publicNotes[key] || 'RGB + CO3D cameras · CO3D cloud cameras';
+    $(id + '-context').textContent = publicNotes[key] || 'Images + known cameras';
+    const side = id === 'leftModel' ? 'left' : 'right';
+    if ($(side + 'Title')) $(side + 'Title').textContent = (side === 'left' ? 'Left · ' : 'Right · ') + publicNames[key];
   }
 }
 function persistViewer() {

@@ -11,13 +11,13 @@ const names = {
   co3d_reference: 'Original CO3D'
 };
 const experimentNotes = {
-  omega: 'RGB-only inference · depth reprojected with CO3D cameras',
-  omega_own: 'RGB-only inference · predicted cameras',
-  map_rgb_only: 'RGB-only inference · predicted cameras',
-  pi3x_rgb_only: 'RGB-only inference · predicted cameras',
-  ggpt: 'RGB + CO3D cameras · SfM-refined cameras',
-  ggpt_rgb_only: 'RGB-only inference · SfM-refined cameras',
-  ggpt_rgb_only_fast: 'RGB-only inference · RoMaV2-fast / SfM-refined cameras'
+  omega: 'Images only · shown with known cameras',
+  omega_own: 'Images only · estimates its cameras',
+  map_rgb_only: 'Images only · estimates its cameras',
+  pi3x_rgb_only: 'Images only · estimates its cameras',
+  ggpt: 'Images + known cameras · cameras refined',
+  ggpt_rgb_only: 'Images only · cameras refined',
+  ggpt_rgb_only_fast: 'Images only · fast matching, refined cameras'
 };
 function node(tag, text, className) {
   const el = document.createElement(tag);
@@ -25,7 +25,7 @@ function node(tag, text, className) {
   if (className) el.className = className;
   return el;
 }
-function note(key) { return experimentNotes[key] || 'RGB + CO3D cameras · CO3D cloud cameras'; }
+function note(key) { return experimentNotes[key] || 'Images + known cameras'; }
 function readSaved() {
   try { return JSON.parse(localStorage.getItem(storageKey)) || {}; } catch { return {}; }
 }
@@ -105,7 +105,7 @@ function metricTable(rows) {
   const wrapper = node('div', undefined, 'metrics-scroll'), table = node('table');
   table.append(node('caption', 'Aggregate saved scores · scene-balanced medians'));
   const head = node('thead'), tr = node('tr');
-  for (const title of ['Method', 'Inference input', 'Cloud cameras', 'FG disagreement ↓', 'BG disagreement ↓', 'CO3D FG depth error ↓', 'Runtime (s)', 'GPU (GiB)', 'Scored scenes FG / BG']) {
+  for (const title of ['Method', 'Model input', 'Cameras used', 'Object disagreement ↓', 'Background disagreement ↓', 'Object depth error ↓', 'Runtime (s)', 'GPU memory (GiB)', 'Scenes object / background']) {
     const th = node('th', title); th.scope = 'col'; tr.append(th);
   }
   head.append(tr); table.append(head);
@@ -113,8 +113,9 @@ function metricTable(rows) {
   const format = (value, percent = false) => typeof value === 'number' && Number.isFinite(value) ? (value * (percent ? 100 : 1)).toFixed(2) + (percent ? '%' : '') : '—';
   for (const row of rows) {
     const tr = node('tr'); tr.dataset.method = row.method;
-    const input = row.camera_conditioning === true ? 'RGB + CO3D cameras' : row.camera_conditioning === false ? 'RGB only' : 'CO3D reference';
-    const cells = [names[row.method], input, row.camera_source,
+    const input = row.camera_conditioning === true ? 'Images + cameras' : row.camera_conditioning === false ? 'Images only' : 'Reference data';
+    const cameras = row.camera_source === 'CO3D' ? 'Provided (CO3D)' : row.camera_source === 'predicted' ? 'Predicted' : /refined/i.test(row.camera_source) ? 'Refined' : row.camera_source;
+    const cells = [names[row.method], input, cameras,
       format(row.regions.foreground?.discrepancy, true), format(row.regions.background?.discrepancy, true),
       format(row.reference_discrepancy, true), format(row.inference_seconds), format(row.peak_allocated_gib),
       `${row.scored_scenes.foreground} / ${row.scored_scenes.background}`];
@@ -131,7 +132,7 @@ function buildMetrics() {
     ggpt_native: 'Camera-conditioned GGPT; native XYZ rasterization and a three-variant common raster mask.',
     ggpt_rgb_only_native: 'RGB-only GGPT; native XYZ rasterization and its own three-variant common raster mask.',
     ggpt_rgb_only_fast_native: 'RGB-only GGPT with RoMaV2-fast; native XYZ rasterization and its own three-variant raster mask.',
-    co3d_reference: 'Sparse original CO3D depths on their native validity mask. FG scores cover 20 scenes; BG scores cover 18. These pixels differ from the dense predictions.'
+    co3d_reference: 'Sparse original CO3D depths on their native validity mask. Object scores cover 20 scenes; background scores cover 18. These pixels differ from the dense predictions.'
   };
   const groups = new Map();
   for (const row of gallery.aggregate.filter(row => row.protocol !== 'common')) {
