@@ -1,0 +1,494 @@
+{
+  "scene": "car/194_20939_43630",
+  "views": 10,
+  "stride": 3,
+  "display_center": [
+    -0.19729700684547424,
+    -0.09168241173028946,
+    0.014476815238595009
+  ],
+  "display_basis": [
+    [
+      0.9809566736221313,
+      0.03738688305020332,
+      -0.1905946433544159
+    ],
+    [
+      0.07596123218536377,
+      -0.9769871234893799,
+      0.1993139684200287
+    ],
+    [
+      -0.17875678837299347,
+      -0.20999613404273987,
+      -0.9612219929695129
+    ]
+  ],
+  "display_scale": 2.414478516578675,
+  "display_scale_percentile": 90,
+  "overview_scale_percentile": 99,
+  "metrics": [
+    {
+      "method": "map",
+      "label": "MapAnything / CO3D inputs",
+      "protocol": "common",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.03805076846651889,
+          "visible": 0.012403109423474053,
+          "excluded": 0.3087034780911464,
+          "within_5pct": 0.9249012847278286,
+          "coverage": 0.9982284185696957,
+          "pair_records": 18
+        },
+        "background": {
+          "discrepancy": 0.01262887691138229,
+          "visible": 0.01175228220043582,
+          "excluded": 0.12656090444015686,
+          "within_5pct": 0.9647375997428446,
+          "coverage": 0.8474186801938006,
+          "pair_records": 18
+        }
+      },
+      "views": 10,
+      "resolution": [
+        288,
+        512
+      ],
+      "camera_conditioning": true,
+      "camera_source": "CO3D",
+      "inference_seconds": 0.4741717092692852,
+      "peak_allocated_gib": 7.615289211273193,
+      "reference_discrepancy": 0.015671168453991413,
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null
+    },
+    {
+      "method": "da3",
+      "label": "DA3",
+      "protocol": "common",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.011660493065994783,
+          "visible": 0.00682618938600062,
+          "excluded": 0.23282043340016673,
+          "within_5pct": 0.9595186102451116,
+          "coverage": 1.0,
+          "pair_records": 18
+        },
+        "background": {
+          "discrepancy": 0.03216723621124164,
+          "visible": 0.0172665022449175,
+          "excluded": 0.2393287343054819,
+          "within_5pct": 0.9113386613386614,
+          "coverage": 1.0,
+          "pair_records": 18
+        }
+      },
+      "views": 10,
+      "resolution": [
+        288,
+        512
+      ],
+      "camera_conditioning": true,
+      "camera_source": "CO3D",
+      "inference_seconds": 0.997022190131247,
+      "peak_allocated_gib": 9.980850219726562,
+      "reference_discrepancy": 0.009458203800022602,
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null
+    },
+    {
+      "method": "pi3x",
+      "label": "Pi3X / CO3D inputs",
+      "protocol": "common",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.0145214731827991,
+          "visible": 0.006644460430244625,
+          "excluded": 0.2983170253674788,
+          "within_5pct": 0.9530965529797306,
+          "coverage": 0.9976428303130787,
+          "pair_records": 18
+        },
+        "background": {
+          "discrepancy": 0.006582688894600213,
+          "visible": 0.005574564602531118,
+          "excluded": 0.08326095808968449,
+          "within_5pct": 0.9874652448634882,
+          "coverage": 0.7785986044484691,
+          "pair_records": 18
+        }
+      },
+      "views": 10,
+      "resolution": [
+        288,
+        512
+      ],
+      "camera_conditioning": true,
+      "camera_source": "CO3D",
+      "inference_seconds": 0.6208205474540591,
+      "peak_allocated_gib": 8.193115234375,
+      "reference_discrepancy": 0.008416688069701195,
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null
+    },
+    {
+      "method": "pow3r",
+      "label": "Pow3R (pairs)",
+      "protocol": "common",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.06163336843439148,
+          "visible": 0.021879921770557035,
+          "excluded": 0.4988673682065249,
+          "within_5pct": 0.6896840737465555,
+          "coverage": 1.0,
+          "pair_records": 18
+        },
+        "background": {
+          "discrepancy": 0.026017887637394776,
+          "visible": 0.018690237713243664,
+          "excluded": 0.2546364119870667,
+          "within_5pct": 0.8723181333782041,
+          "coverage": 1.0,
+          "pair_records": 18
+        }
+      },
+      "views": 10,
+      "resolution": [
+        288,
+        512
+      ],
+      "camera_conditioning": true,
+      "camera_source": "CO3D",
+      "inference_seconds": 0.8733647409826517,
+      "peak_allocated_gib": 3.3859000205993652,
+      "reference_discrepancy": 0.022889153100550175,
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null
+    },
+    {
+      "method": "omega",
+      "label": "VGGT-Omega / CO3D cameras",
+      "protocol": "common",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.05451592681454011,
+          "visible": 0.019098763092741198,
+          "excluded": 0.6598526894076964,
+          "within_5pct": 0.9081190112009244,
+          "coverage": 1.0,
+          "pair_records": 18
+        },
+        "background": {
+          "discrepancy": 0.021574530258575433,
+          "visible": 0.014626577042490731,
+          "excluded": 0.21357929136566906,
+          "within_5pct": 0.932514227073421,
+          "coverage": 1.0,
+          "pair_records": 18
+        }
+      },
+      "views": 10,
+      "resolution": [
+        288,
+        512
+      ],
+      "camera_conditioning": false,
+      "camera_source": "CO3D",
+      "inference_seconds": 1.1425434881821275,
+      "peak_allocated_gib": 6.35226583480835,
+      "reference_discrepancy": 0.03967371769249439,
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null
+    },
+    {
+      "method": "omega_own",
+      "label": "VGGT-Omega / predicted cameras",
+      "protocol": "common",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.022157621055187,
+          "visible": 0.014967475040021556,
+          "excluded": 0.41757783758451333,
+          "within_5pct": 0.9584813146084881,
+          "coverage": 1.0,
+          "pair_records": 18
+        },
+        "background": {
+          "discrepancy": 0.012618601480840316,
+          "visible": 0.00908096418584248,
+          "excluded": 0.1638103377692754,
+          "within_5pct": 0.9543774919199639,
+          "coverage": 1.0,
+          "pair_records": 18
+        }
+      },
+      "views": 10,
+      "resolution": [
+        288,
+        512
+      ],
+      "camera_conditioning": false,
+      "camera_source": "predicted",
+      "inference_seconds": 1.1425434881821275,
+      "peak_allocated_gib": 6.35226583480835,
+      "reference_discrepancy": 0.03967371769249439,
+      "rotation_degrees": 0.5845028162002563,
+      "center_rmse": 0.02101716957986355,
+      "focal_difference": 0.04365748167037964
+    },
+    {
+      "method": "map_rgb_only",
+      "label": "MapAnything / RGB only / predicted cameras",
+      "protocol": "map_rgb_only",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.034877575226604424,
+          "visible": 0.012016799670361818,
+          "excluded": 0.37763048017476286,
+          "within_5pct": 0.9109358122285363,
+          "coverage": 0.9987113039289524,
+          "pair_records": 18
+        },
+        "background": {
+          "discrepancy": 0.015180903154251718,
+          "visible": 0.009807479294403931,
+          "excluded": 0.1667341860061346,
+          "within_5pct": 0.9310149263348537,
+          "coverage": 0.8625983437060181,
+          "pair_records": 18
+        }
+      },
+      "views": 10,
+      "resolution": [
+        294,
+        518
+      ],
+      "camera_conditioning": false,
+      "camera_source": "predicted",
+      "inference_seconds": 0.4729841537773609,
+      "peak_allocated_gib": 7.5914740562438965,
+      "reference_discrepancy": null,
+      "rotation_degrees": 1.4411215782165527,
+      "center_rmse": 0.01349404826760292,
+      "focal_difference": 0.0744246244430542
+    },
+    {
+      "method": "pi3x_rgb_only",
+      "label": "Pi3X / RGB only / predicted cameras",
+      "protocol": "pi3x_rgb_only",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.017256175399025894,
+          "visible": 0.009294778636394468,
+          "excluded": 0.3247956760172222,
+          "within_5pct": 0.9512450832752948,
+          "coverage": 0.9972294055784042,
+          "pair_records": 18
+        },
+        "background": {
+          "discrepancy": 0.007184770073604798,
+          "visible": 0.006290642754114789,
+          "excluded": 0.07533070585782005,
+          "within_5pct": 0.9711480908152734,
+          "coverage": 0.7713007504475922,
+          "pair_records": 18
+        }
+      },
+      "views": 10,
+      "resolution": [
+        294,
+        518
+      ],
+      "camera_conditioning": false,
+      "camera_source": "predicted",
+      "inference_seconds": 0.5597020220011473,
+      "peak_allocated_gib": 8.075536727905273,
+      "reference_discrepancy": 0.025801152922213078,
+      "rotation_degrees": 0.5178661346435547,
+      "center_rmse": 0.01882052607834339,
+      "focal_difference": 0.022387564182281494
+    },
+    {
+      "method": "ggpt",
+      "label": "Pi3X + GGPT / CO3D inputs",
+      "protocol": "ggpt_native",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.005869264359726839,
+          "pair_records": 18
+        },
+        "background": {
+          "discrepancy": 0.0035964558751551716,
+          "pair_records": 18
+        }
+      },
+      "reference_discrepancy": 0.006908384384587407,
+      "inference_seconds": 19.769183043390512,
+      "peak_allocated_gib": 8.768982887268066,
+      "camera_conditioning": true,
+      "camera_source": "SfM-refined Pi3X"
+    },
+    {
+      "method": "ggpt_rgb_only",
+      "label": "Pi3X + GGPT / RGB only",
+      "protocol": "ggpt_rgb_only_native",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.005383438248997132,
+          "pair_records": 18
+        },
+        "background": {
+          "discrepancy": 0.0035106972676198153,
+          "pair_records": 18
+        }
+      },
+      "reference_discrepancy": 0.006542573217302561,
+      "inference_seconds": 20.621640348806977,
+      "peak_allocated_gib": 8.652052402496338,
+      "camera_conditioning": false,
+      "camera_source": "SfM-refined Pi3X"
+    },
+    {
+      "method": "ggpt_rgb_only_fast",
+      "label": "Pi3X + GGPT / RGB only / RoMaV2-fast",
+      "protocol": "ggpt_rgb_only_fast_native",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.005049929254719164,
+          "pair_records": 18
+        },
+        "background": {
+          "discrepancy": 0.0034891484483019946,
+          "pair_records": 18
+        }
+      },
+      "reference_discrepancy": 0.00677984394133091,
+      "inference_seconds": 18.009897467680275,
+      "peak_allocated_gib": 8.652052402496338,
+      "camera_conditioning": false,
+      "camera_source": "SfM-refined Pi3X"
+    },
+    {
+      "method": "co3d_reference",
+      "label": "Original CO3D depths + poses",
+      "protocol": "co3d_reference",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.00855482343184138,
+          "visible": 0.004070370497615473,
+          "excluded": 0.23418461047628528,
+          "within_5pct": 0.9951390069314597,
+          "coverage": 0.20880778984055537,
+          "pair_records": 18
+        },
+        "background": {
+          "discrepancy": 0.005593749950024644,
+          "visible": 0.00508797601225791,
+          "excluded": 0.0,
+          "within_5pct": 1.0,
+          "coverage": 0.0022268520231193134,
+          "pair_records": 3
+        }
+      },
+      "views": 10,
+      "resolution": [
+        294,
+        518
+      ],
+      "camera_conditioning": null,
+      "camera_source": "CO3D",
+      "inference_seconds": null,
+      "peak_allocated_gib": null,
+      "reference_discrepancy": null,
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null
+    }
+  ],
+  "methods": [
+    {
+      "method": "map",
+      "label": "MapAnything / CO3D inputs",
+      "points": 80000,
+      "foreground_points": 60000
+    },
+    {
+      "method": "da3",
+      "label": "DA3",
+      "points": 80000,
+      "foreground_points": 60000
+    },
+    {
+      "method": "pi3x",
+      "label": "Pi3X / CO3D inputs",
+      "points": 80000,
+      "foreground_points": 60000
+    },
+    {
+      "method": "pow3r",
+      "label": "Pow3R (pairs)",
+      "points": 80000,
+      "foreground_points": 60000
+    },
+    {
+      "method": "omega",
+      "label": "VGGT-Omega / CO3D cameras",
+      "points": 80000,
+      "foreground_points": 60000
+    },
+    {
+      "method": "omega_own",
+      "label": "VGGT-Omega / predicted cameras",
+      "points": 80000,
+      "foreground_points": 60000
+    },
+    {
+      "method": "map_rgb_only",
+      "label": "MapAnything / RGB only / predicted cameras",
+      "points": 80000,
+      "foreground_points": 60000,
+      "camera_conditioning": false,
+      "camera_source": "predicted"
+    },
+    {
+      "method": "pi3x_rgb_only",
+      "label": "Pi3X / RGB only / predicted cameras",
+      "points": 80000,
+      "foreground_points": 60000,
+      "camera_conditioning": false,
+      "camera_source": "predicted"
+    },
+    {
+      "method": "ggpt",
+      "label": "Pi3X + GGPT / CO3D inputs",
+      "points": 80000,
+      "foreground_points": 60000,
+      "camera_conditioning": true,
+      "camera_source": "SfM-refined Pi3X"
+    },
+    {
+      "method": "ggpt_rgb_only",
+      "label": "Pi3X + GGPT / RGB only",
+      "points": 80000,
+      "foreground_points": 60000,
+      "camera_conditioning": false,
+      "camera_source": "SfM-refined Pi3X"
+    },
+    {
+      "method": "ggpt_rgb_only_fast",
+      "label": "Pi3X + GGPT / RGB only / RoMaV2-fast",
+      "points": 80000,
+      "foreground_points": 60000,
+      "camera_conditioning": false,
+      "camera_source": "SfM-refined Pi3X"
+    }
+  ]
+}

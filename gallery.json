@@ -1,0 +1,816 @@
+{
+  "methods": [
+    {
+      "key": "map",
+      "label": "MapAnything / CO3D inputs"
+    },
+    {
+      "key": "da3",
+      "label": "DA3"
+    },
+    {
+      "key": "pi3x",
+      "label": "Pi3X / CO3D inputs"
+    },
+    {
+      "key": "pow3r",
+      "label": "Pow3R (pairs)"
+    },
+    {
+      "key": "omega",
+      "label": "VGGT-Omega / CO3D cameras"
+    },
+    {
+      "key": "omega_own",
+      "label": "VGGT-Omega / predicted cameras"
+    },
+    {
+      "key": "map_rgb_only",
+      "label": "MapAnything / RGB only / predicted cameras"
+    },
+    {
+      "key": "pi3x_rgb_only",
+      "label": "Pi3X / RGB only / predicted cameras"
+    },
+    {
+      "key": "ggpt",
+      "label": "Pi3X + GGPT / CO3D inputs"
+    },
+    {
+      "key": "ggpt_rgb_only",
+      "label": "Pi3X + GGPT / RGB only"
+    },
+    {
+      "key": "ggpt_rgb_only_fast",
+      "label": "Pi3X + GGPT / RGB only / RoMaV2-fast"
+    }
+  ],
+  "scenes": [
+    {
+      "scene": "apple/575_84738_167639",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "bottle/598_92195_184711",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "chair/579_85558_168937",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "bicycle/504_72680_141364",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "hydrant/539_78780_154075",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "teddybear/537_78252_152125",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "backpack/386_45948_91845",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "bench/596_91122_180858",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "bowl/69_5490_12853",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "toyplane/432_61238_120319",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "motorcycle/582_86621_170494",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "car/194_20939_43630",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "plant/571_83189_164325",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "umbrella/618_100194_200292",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "wineglass/160_17577_32970",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "laptop/457_64638_127324",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "toytrain/350_36700_68417",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "baseballglove/135_15558_31397",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "cake/387_46497_92714",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    },
+    {
+      "scene": "skateboard/368_39854_77813",
+      "methods": [
+        "map",
+        "da3",
+        "pi3x",
+        "pow3r",
+        "omega",
+        "omega_own",
+        "map_rgb_only",
+        "pi3x_rgb_only",
+        "ggpt",
+        "ggpt_rgb_only",
+        "ggpt_rgb_only_fast"
+      ]
+    }
+  ],
+  "views": [
+    {
+      "key": "front",
+      "label": "Front RGB",
+      "description": "RGB-colored cloud from the first-camera side."
+    },
+    {
+      "key": "rotated",
+      "label": "Rotated RGB",
+      "description": "The same cloud viewed from another angle."
+    },
+    {
+      "key": "source",
+      "label": "Source-view colors",
+      "description": "Each color identifies one input frame; separated layers can reveal misalignment."
+    }
+  ],
+  "primary": [
+    "pi3x",
+    "da3",
+    "pow3r",
+    "map",
+    "omega"
+  ],
+  "aggregate": [
+    {
+      "method": "map",
+      "label": "MapAnything / CO3D inputs",
+      "protocol": "common",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.013953900074271058,
+          "visible": 0.009292199197132815,
+          "excluded": 0.19442131513510727,
+          "within_5pct": 0.9524456426509063,
+          "coverage": 1.0
+        },
+        "background": {
+          "discrepancy": 0.005699663715233552,
+          "visible": 0.00552496969998621,
+          "excluded": 0.02740302304147855,
+          "within_5pct": 0.9941744333611822,
+          "coverage": 1.0
+        }
+      },
+      "camera_conditioning": true,
+      "camera_source": "CO3D",
+      "inference_seconds": 0.4747661747969687,
+      "peak_allocated_gib": 7.614623308181763,
+      "reference_discrepancy": 0.016905834432691336,
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null,
+      "scene_count": 20,
+      "available_scenes": 20,
+      "scored_scenes": {
+        "foreground": 20,
+        "background": 20
+      }
+    },
+    {
+      "method": "da3",
+      "label": "DA3",
+      "protocol": "common",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.010545009895677372,
+          "visible": 0.0072970976718277816,
+          "excluded": 0.21540574042682273,
+          "within_5pct": 0.9924692620154428,
+          "coverage": 1.0
+        },
+        "background": {
+          "discrepancy": 0.02618071147214292,
+          "visible": 0.015007339012183644,
+          "excluded": 0.2331453007910298,
+          "within_5pct": 0.9713571418567387,
+          "coverage": 1.0
+        }
+      },
+      "camera_conditioning": true,
+      "camera_source": "CO3D",
+      "inference_seconds": 0.7187953600659966,
+      "peak_allocated_gib": 9.980850219726562,
+      "reference_discrepancy": 0.01434025028720498,
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null,
+      "scene_count": 20,
+      "available_scenes": 20,
+      "scored_scenes": {
+        "foreground": 20,
+        "background": 20
+      }
+    },
+    {
+      "method": "pi3x",
+      "label": "Pi3X / CO3D inputs",
+      "protocol": "common",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.004975969439191579,
+          "visible": 0.004434276717965439,
+          "excluded": 0.1508577434900992,
+          "within_5pct": 0.9984543648029833,
+          "coverage": 0.9999019063877044
+        },
+        "background": {
+          "discrepancy": 0.0026269443112968615,
+          "visible": 0.0025505552179363685,
+          "excluded": 0.0284585640656497,
+          "within_5pct": 0.9935664274642753,
+          "coverage": 0.9871291548124883
+        }
+      },
+      "camera_conditioning": true,
+      "camera_source": "CO3D",
+      "inference_seconds": 0.6223410875536501,
+      "peak_allocated_gib": 8.193115234375,
+      "reference_discrepancy": 0.004999430733732879,
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null,
+      "scene_count": 20,
+      "available_scenes": 20,
+      "scored_scenes": {
+        "foreground": 20,
+        "background": 20
+      }
+    },
+    {
+      "method": "pow3r",
+      "label": "Pow3R (pairs)",
+      "protocol": "common",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.009430207245165727,
+          "visible": 0.008012657682978527,
+          "excluded": 0.17619874492391577,
+          "within_5pct": 0.9831457072783302,
+          "coverage": 1.0
+        },
+        "background": {
+          "discrepancy": 0.008544001475338353,
+          "visible": 0.0075231004955395794,
+          "excluded": 0.06102144435974806,
+          "within_5pct": 0.9822541209882156,
+          "coverage": 1.0
+        }
+      },
+      "camera_conditioning": true,
+      "camera_source": "CO3D",
+      "inference_seconds": 0.8241797164082527,
+      "peak_allocated_gib": 3.3854212760925293,
+      "reference_discrepancy": 0.01204023347236216,
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null,
+      "scene_count": 20,
+      "available_scenes": 20,
+      "scored_scenes": {
+        "foreground": 20,
+        "background": 20
+      }
+    },
+    {
+      "method": "omega",
+      "label": "VGGT-Omega / CO3D cameras",
+      "protocol": "common",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.02099213818996873,
+          "visible": 0.013804832512975087,
+          "excluded": 0.20040015674643155,
+          "within_5pct": 0.9767310137972537,
+          "coverage": 1.0
+        },
+        "background": {
+          "discrepancy": 0.012029652987035615,
+          "visible": 0.011222985896764294,
+          "excluded": 0.03371388665859525,
+          "within_5pct": 0.9910032011037639,
+          "coverage": 1.0
+        }
+      },
+      "camera_conditioning": false,
+      "camera_source": "CO3D",
+      "inference_seconds": 0.34919313341379166,
+      "peak_allocated_gib": 6.35226583480835,
+      "reference_discrepancy": 0.022003648336976767,
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null,
+      "scene_count": 20,
+      "available_scenes": 20,
+      "scored_scenes": {
+        "foreground": 20,
+        "background": 20
+      }
+    },
+    {
+      "method": "omega_own",
+      "label": "VGGT-Omega / predicted cameras",
+      "protocol": "common",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.01070104298997216,
+          "visible": 0.007920387943586673,
+          "excluded": 0.1679343387905164,
+          "within_5pct": 0.9789385643364599,
+          "coverage": 1.0
+        },
+        "background": {
+          "discrepancy": 0.005270730282756976,
+          "visible": 0.004980131627559475,
+          "excluded": 0.026322394957776586,
+          "within_5pct": 0.9921848776378787,
+          "coverage": 1.0
+        }
+      },
+      "camera_conditioning": false,
+      "camera_source": "predicted",
+      "inference_seconds": 0.34919313341379166,
+      "peak_allocated_gib": 6.35226583480835,
+      "reference_discrepancy": 0.022003648336976767,
+      "rotation_degrees": 0.8740347027778625,
+      "center_rmse": 0.02075232472270727,
+      "focal_difference": 0.03327634930610657,
+      "scene_count": 20,
+      "available_scenes": 20,
+      "scored_scenes": {
+        "foreground": 20,
+        "background": 20
+      }
+    },
+    {
+      "method": "map_rgb_only",
+      "label": "MapAnything / RGB only / predicted cameras",
+      "protocol": "map_rgb_only",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.015276873120417856,
+          "visible": 0.01092122957117724,
+          "excluded": 0.21853460875699782,
+          "within_5pct": 0.9409460439577315,
+          "coverage": 1.0
+        },
+        "background": {
+          "discrepancy": 0.006900561588690974,
+          "visible": 0.006507146207154732,
+          "excluded": 0.032508159678629356,
+          "within_5pct": 0.9931178495417826,
+          "coverage": 1.0
+        }
+      },
+      "camera_conditioning": false,
+      "camera_source": "predicted",
+      "inference_seconds": 0.4611924481578171,
+      "peak_allocated_gib": 7.593444347381592,
+      "reference_discrepancy": null,
+      "rotation_degrees": 2.4481581449508667,
+      "center_rmse": 0.04359784908592701,
+      "focal_difference": 0.09631195664405823,
+      "scene_count": 20,
+      "available_scenes": 20,
+      "scored_scenes": {
+        "foreground": 20,
+        "background": 20
+      }
+    },
+    {
+      "method": "pi3x_rgb_only",
+      "label": "Pi3X / RGB only / predicted cameras",
+      "protocol": "pi3x_rgb_only",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.005661300453217943,
+          "visible": 0.004497152952604168,
+          "excluded": 0.14255484773368532,
+          "within_5pct": 0.9974075577225912,
+          "coverage": 0.9999953305067334
+        },
+        "background": {
+          "discrepancy": 0.0027403758119366097,
+          "visible": 0.002692501032025069,
+          "excluded": 0.02566738439486065,
+          "within_5pct": 0.9943998285347286,
+          "coverage": 0.9847262160176113
+        }
+      },
+      "camera_conditioning": false,
+      "camera_source": "predicted",
+      "inference_seconds": 0.5600402508862317,
+      "peak_allocated_gib": 8.075536727905273,
+      "reference_discrepancy": 0.014929486671462655,
+      "rotation_degrees": 0.5579678416252136,
+      "center_rmse": 0.013592119794338942,
+      "focal_difference": 0.011230036616325378,
+      "scene_count": 20,
+      "available_scenes": 20,
+      "scored_scenes": {
+        "foreground": 20,
+        "background": 20
+      }
+    },
+    {
+      "method": "ggpt",
+      "label": "Pi3X + GGPT / CO3D inputs",
+      "protocol": "ggpt_native",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.001574452929724152,
+          "visible": null,
+          "excluded": null,
+          "within_5pct": null,
+          "coverage": null
+        },
+        "background": {
+          "discrepancy": 0.0009585448679997634,
+          "visible": null,
+          "excluded": null,
+          "within_5pct": null,
+          "coverage": null
+        }
+      },
+      "reference_discrepancy": 0.007099977694451809,
+      "inference_seconds": 24.94518323848024,
+      "peak_allocated_gib": 8.765811204910278,
+      "camera_conditioning": true,
+      "camera_source": "SfM-refined Pi3X",
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null,
+      "scene_count": 20,
+      "available_scenes": 20,
+      "scored_scenes": {
+        "foreground": 20,
+        "background": 20
+      }
+    },
+    {
+      "method": "ggpt_rgb_only",
+      "label": "Pi3X + GGPT / RGB only",
+      "protocol": "ggpt_rgb_only_native",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.001511577254467007,
+          "visible": null,
+          "excluded": null,
+          "within_5pct": null,
+          "coverage": null
+        },
+        "background": {
+          "discrepancy": 0.0009217322114221326,
+          "visible": null,
+          "excluded": null,
+          "within_5pct": null,
+          "coverage": null
+        }
+      },
+      "reference_discrepancy": 0.0068881368497386575,
+      "inference_seconds": 23.379257258959115,
+      "peak_allocated_gib": 8.650096654891968,
+      "camera_conditioning": false,
+      "camera_source": "SfM-refined Pi3X",
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null,
+      "scene_count": 20,
+      "available_scenes": 20,
+      "scored_scenes": {
+        "foreground": 20,
+        "background": 20
+      }
+    },
+    {
+      "method": "ggpt_rgb_only_fast",
+      "label": "Pi3X + GGPT / RGB only / RoMaV2-fast",
+      "protocol": "ggpt_rgb_only_fast_native",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.001589619464589701,
+          "visible": null,
+          "excluded": null,
+          "within_5pct": null,
+          "coverage": null
+        },
+        "background": {
+          "discrepancy": 0.0009333433601697163,
+          "visible": null,
+          "excluded": null,
+          "within_5pct": null,
+          "coverage": null
+        }
+      },
+      "reference_discrepancy": 0.006792805623263121,
+      "inference_seconds": 21.546575983054936,
+      "peak_allocated_gib": 8.650096654891968,
+      "camera_conditioning": false,
+      "camera_source": "SfM-refined Pi3X",
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null,
+      "scene_count": 20,
+      "available_scenes": 20,
+      "scored_scenes": {
+        "foreground": 20,
+        "background": 20
+      }
+    },
+    {
+      "method": "co3d_reference",
+      "label": "Original CO3D depths + poses",
+      "protocol": "co3d_reference",
+      "regions": {
+        "foreground": {
+          "discrepancy": 0.0029881592044671244,
+          "visible": 0.0027333209179552405,
+          "excluded": 0.09928470521852416,
+          "within_5pct": 0.9980127762267139,
+          "coverage": 0.53289625646087
+        },
+        "background": {
+          "discrepancy": 0.002250635171716587,
+          "visible": 0.002245712586356331,
+          "excluded": 0.0,
+          "within_5pct": 1.0,
+          "coverage": 0.002377583761100437
+        }
+      },
+      "camera_conditioning": null,
+      "camera_source": "CO3D",
+      "inference_seconds": null,
+      "peak_allocated_gib": null,
+      "reference_discrepancy": null,
+      "rotation_degrees": null,
+      "center_rmse": null,
+      "focal_difference": null,
+      "scene_count": 20,
+      "available_scenes": 20,
+      "scored_scenes": {
+        "foreground": 20,
+        "background": 18
+      }
+    }
+  ]
+}

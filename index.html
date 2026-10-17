@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore synchronized CO3D pointcloud reconstructions from Pi3X, DA3, Pow3R, MapAnything and VGGT-Omega across 20 scenes.">
+  <meta name="theme-color" content="#10171f">
+  <title>CO3D · Reconstruction comparison</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="masthead">
+    <a class="brand" href="./">CO3D <span>/ reconstruction study</span></a>
+    <nav aria-label="Page sections"><a href="#explore">Explore</a><a href="#metrics">Metrics</a><a href="#methods">Methods & protocol</a></nav>
+  </header>
+  <main>
+    <section class="intro">
+      <p class="eyebrow">20 scenes · 10 input views each · 5 primary methods</p>
+      <h1>Compare the reconstruction.</h1>
+      <p>Explore Pi3X, DA3, Pow3R, MapAnything and VGGT-Omega on the same CO3D scenes. Rotate either cloud to inspect both from the same viewpoint.</p>
+    </section>
+
+    <section id="explore" aria-label="Interactive comparison">
+      <div class="scene-bar">
+        <label class="scene-picker">Scene<select id="scene" aria-label="Choose a scene"></select></label>
+        <div class="scene-buttons"><button id="previous" aria-label="Previous scene">←</button><span id="scene-position"></span><button id="next" aria-label="Next scene">→</button></div>
+        <span id="sequence" class="sequence"></span>
+      </div>
+      <div class="compare-controls">
+        <label>Left method<select id="left-method"></select><small id="left-context"></small></label>
+        <label>Right method<select id="right-method"></select><small id="right-context"></small></label>
+        <label class="region-control">Display<select id="region"><option value="fg">Object foreground</option><option value="all">Whole scene</option></select></label>
+      </div>
+      <div class="viewer-wrap">
+        <p id="viewer-loading" role="status">Loading the interactive pointclouds…</p>
+        <iframe id="viewer" title="Synchronized left and right pointcloud comparison" src="about:blank" allow="fullscreen"></iframe>
+      </div>
+      <div class="viewer-footer"><p>Drag to rotate · Shift + drag to pan · Scroll to zoom. Foreground masks change display only.</p><div><a id="standalone" target="_blank" rel="noopener">Open full viewer ↗</a><button id="copy-link">Copy comparison link</button><span id="copy-status" role="status"></span></div></div>
+      <details class="extra-options"><summary>Additional experiments</summary><label><input type="checkbox" id="include-extras"> Include RGB-only, alternate-camera and GGPT variants in the method menus</label><p>These variants use different inputs or evaluation pixels. Their scores appear in separate protocol groups below.</p></details>
+      <p id="error" role="alert" hidden></p>
+      <noscript><p>This interactive comparison requires JavaScript. Static previews and saved viewers are included in the scene folders.</p></noscript>
+    </section>
+
+    <section class="scene-browser" aria-labelledby="browse-heading">
+      <div class="section-heading"><h2 id="browse-heading">Explore the scenes</h2><p>Thumbnails show Pi3X foreground reconstructions.</p></div>
+      <div id="thumbnails" class="thumbnails"></div>
+    </section>
+
+    <section class="static-previews" aria-labelledby="preview-heading">
+      <div class="section-heading"><h2 id="preview-heading">Static comparison</h2><div class="preview-tabs" role="group" aria-label="Preview viewpoint"><button data-view="front" aria-pressed="true">Front</button><button data-view="rotated" aria-pressed="false">Rotated</button><button data-view="source" aria-pressed="false">Source views</button></div></div>
+      <p id="preview-description" class="muted">RGB-colored pointclouds from the first-camera side.</p>
+      <div id="previews" class="preview-grid"></div>
+    </section>
+
+    <section id="metrics" aria-labelledby="metrics-heading">
+      <div class="section-heading"><h2 id="metrics-heading">Reconstruction metrics</h2><a href="metrics.json" download>Download all scores ↓</a></div>
+      <p>Saved results across the 20 scenes. All error columns are lower-is-better. Inference inputs and cloud cameras are listed separately.</p>
+      <div class="callout"><strong>Read scores within their protocol.</strong> The main table shares evaluation pixels, but camera inputs still differ. Additional experiments use different masks or grids. Cross-view consistency measures agreement between views; it does not establish geometric accuracy.</div>
+      <h3>Shared evaluation pixels</h3>
+      <p class="muted">Six configurations · common 512 evaluation grid · intersection of the five primary model masks. The two VGGT-Omega configurations reuse one inference run.</p>
+      <div id="primary-metrics"></div>
+      <details class="advanced-metrics"><summary>Additional experiments & sparse CO3D baseline</summary><p>Each section below has its own evaluation protocol. These sections are not a shared leaderboard.</p><div id="extra-metrics"></div></details>
+      <details><summary>Metric definitions & aggregation</summary><dl class="definitions">
+        <dt>FG / BG disagreement</dt><dd>Relative cross-view depth disagreement in foreground / background, including occluded points. This is consistency between predictions.</dd>
+        <dt>CO3D FG depth error</dt><dd>Relative difference |prediction − reference| / reference on valid foreground CO3D depth pixels. These COLMAP reference depths can contain errors.</dd>
+        <dt>Aggregation</dt><dd>Scene-balanced median of per-scene medians. Reference error uses frame medians within each scene. Scenes without a valid score are omitted; FG / BG scene counts are shown for each row.</dd>
+        <dt>Runtime / memory</dt><dd>Saved inference runtime and peak allocated GPU memory. Grids and execution paths differ; these measurements are indicative. GGPT runtime includes Pi3X, matching, camera optimization and refinement.</dd>
+        <dt>Missing values</dt><dd>“—” means unavailable or not applicable. The sparse CO3D baseline has no self-comparison error or inference timing.</dd>
+      </dl></details>
+    </section>
+
+    <section id="methods" aria-labelledby="methods-heading">
+      <h2 id="methods-heading">Methods & evaluation setup</h2>
+      <p>This page presents an exploratory comparison on 20 selected CO3D scenes, using 10 views per scene. It is a saved experiment, not an official benchmark or an evaluation of the full dataset.</p>
+      <div class="method-links">
+        <a href="https://github.com/yyfz/Pi3">Pi3X <span>Official code ↗</span></a>
+        <a href="https://github.com/ByteDance-Seed/Depth-Anything-3">Depth Anything 3 <span>Official code ↗</span></a>
+        <a href="https://github.com/naver/pow3r">Pow3R <span>Official code ↗</span></a>
+        <a href="https://github.com/facebookresearch/map-anything">MapAnything <span>Official code ↗</span></a>
+        <a href="https://github.com/facebookresearch/vggt-omega">VGGT-Omega <span>Official code ↗</span></a>
+      </div>
+      <div class="protocol-grid"><div><h3>Camera inputs</h3><p>Primary Pi3X, DA3, MapAnything and pairwise Pow3R runs received CO3D cameras. VGGT-Omega received RGB only. Its primary cloud reprojects predicted depths with CO3D cameras; its alternate cloud uses predicted cameras. These are two displays of the same inference run.</p></div><div><h3>Pointcloud display</h3><p>Clouds combine points from the selected views without surface fusion or smoothing. All methods share one scene display transform, scale and viewpoint. Foreground masks affect display only. Each method retains its saved geometry-validity mask.</p></div></div>
+      <details><summary>Sampling & additional protocol details</summary><p>Clouds were sampled at stride 3 and capped at 60,000 foreground and 20,000 background points per method. These display samples are separate from the evaluation pixels. Static previews use a shared object viewport; use the interactive viewer’s Overview control to inspect distant points.</p><p>RGB-only MapAnything and Pi3X predict their own cameras; CO3D cameras are used afterward for a single similarity alignment and evaluation. GGPT refines Pi3X with matching and camera optimization, retaining corrected XYZ. Its camera-conditioned, RGB-only and fast-matcher variants have separate retained-pixel intersections.</p><p>This public export preserves the original experiment’s pointclouds, previews and scores. It does not substitute later 30-view preprocessing or filtering results.</p></details>
+    </section>
+  </main>
+  <footer>Dataset: <a href="https://github.com/facebookresearch/co3d">Common Objects in 3D (CO3D)</a> · Static WebGL comparison · <a href="README.md">About this export</a></footer>
+</body>
+</html>
