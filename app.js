@@ -100,9 +100,9 @@ function buildScenes() {
 }
 function metricTable(rows, protocols) {
   const wrapper = node('div', undefined, 'metrics-scroll'), table = node('table');
-  table.append(node('caption', 'Aggregate saved scores · scene-balanced medians'));
+  table.append(node('caption', 'Median across scenes'));
   const head = node('thead'), tr = node('tr');
-  for (const title of ['Method', 'Model input', 'Cameras used', 'Object disagreement ↓', 'Background disagreement ↓', 'Object depth error ↓', 'Runtime (s)', 'GPU memory (GiB)', 'Scenes object / background']) {
+  for (const title of ['Method', 'Object disagreement ↓', 'Background disagreement ↓', 'Object depth error ↓', 'Runtime (s)', 'GPU memory (GiB)']) {
     const th = node('th', title); th.scope = 'col'; tr.append(th);
   }
   head.append(tr); table.append(head);
@@ -112,18 +112,14 @@ function metricTable(rows, protocols) {
     if (row.protocol !== previousProtocol) {
       body = node('tbody'); body.dataset.protocol = row.protocol;
       const group = node('tr', undefined, 'metric-protocol'), heading = node('th');
-      heading.scope = 'rowgroup'; heading.colSpan = 9;
-      heading.append(node('span', protocols[row.protocol].title), node('span', protocols[row.protocol].note, 'protocol-note'));
+      heading.scope = 'rowgroup'; heading.colSpan = 6; heading.textContent = protocols[row.protocol];
       group.append(heading); body.append(group); table.append(body);
       previousProtocol = row.protocol;
     }
     const tr = node('tr'); tr.dataset.method = row.method;
-    const input = row.camera_conditioning === true ? 'Images + cameras' : row.camera_conditioning === false ? 'Images only' : 'Reference data';
-    const cameras = row.camera_source === 'CO3D' ? 'Provided (CO3D)' : row.camera_source === 'predicted' ? 'Predicted' : /refined/i.test(row.camera_source) ? 'Refined' : row.camera_source;
-    const cells = [names[row.method], input, cameras,
+    const cells = [names[row.method],
       format(row.regions.foreground?.discrepancy, true), format(row.regions.background?.discrepancy, true),
-      format(row.reference_discrepancy, true), format(row.inference_seconds), format(row.peak_allocated_gib),
-      `${row.scored_scenes.foreground} / ${row.scored_scenes.background}`];
+      format(row.reference_discrepancy, true), format(row.inference_seconds), format(row.peak_allocated_gib)];
     cells.forEach(value => tr.append(node('td', value))); body.append(tr);
   }
   wrapper.append(table); return wrapper;
@@ -131,13 +127,13 @@ function metricTable(rows, protocols) {
 function buildMetrics() {
   const commonOrder = [...gallery.primary, 'omega_own'];
   const protocols = {
-    common: {title: 'Shared scoring pixels', note: 'Common 512 grid and intersection of the five primary model masks. Camera inputs differ. The two VGGT-Omega rows reuse one prediction.'},
-    map_rgb_only: {title: names.map_rgb_only, note: 'Native grid and its own retained mask.'},
-    pi3x_rgb_only: {title: names.pi3x_rgb_only, note: 'Native grid; retained intersection with conditioned MapAnything / DA3 masks.'},
-    ggpt_native: {title: names.ggpt, note: 'Native XYZ rasterization and a three-variant common raster mask.'},
-    ggpt_rgb_only_native: {title: names.ggpt_rgb_only, note: 'Native XYZ rasterization and its own three-variant common raster mask.'},
-    ggpt_rgb_only_fast_native: {title: names.ggpt_rgb_only_fast, note: 'Images only, with RoMaV2-fast; native XYZ rasterization and its own three-variant raster mask.'},
-    co3d_reference: {title: 'Original CO3D reference', note: 'Sparse original depths with their own validity mask. Object scores cover 20 scenes; background scores cover 18. These pixels differ from the dense predictions.'}
+    common: 'Shared scoring pixels',
+    map_rgb_only: names.map_rgb_only,
+    pi3x_rgb_only: names.pi3x_rgb_only,
+    ggpt_native: names.ggpt,
+    ggpt_rgb_only_native: names.ggpt_rgb_only,
+    ggpt_rgb_only_fast_native: names.ggpt_rgb_only_fast,
+    co3d_reference: 'Original CO3D reference'
   };
   const rows = [...commonOrder.map(key => gallery.aggregate.find(row => row.method === key)), ...gallery.aggregate.filter(row => row.protocol !== 'common')];
   $('primary-metrics').append(metricTable(rows, protocols));
