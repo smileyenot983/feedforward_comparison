@@ -5,9 +5,11 @@
 A standalone static comparison of Pi3X, Depth Anything 3, Pow3R, MapAnything and
 VGGT-Omega on 20 CO3D scenes with 10 views per scene. Includes synchronized WebGL
 pointclouds, scene thumbnails, shareable selections and saved
-metrics grouped by evaluation protocol. All 11 variants, including RGB-only and
+metrics. All 11 variants, including RGB-only and
 GGPT results, are available directly in the main method selectors. All metric
-rows appear in one visible table, grouped by scoring settings.
+rows appear in one visible table: RGB only first, then CO3D camera inputs, with
+the original CO3D reference at the bottom. Input tags remain in viewer labels;
+table rows omit them because the group headings already identify the input.
 
 This is an exploratory saved experiment, not an official benchmark. Primary
 Pi3X, DA3, MapAnything and Pow3R received CO3D camera inputs. VGGT-Omega received
@@ -54,6 +56,9 @@ CO3D baseline has object scores for 20 scenes and background scores for 18.
 Per-row scene counts, inputs and camera sources remain in `metrics.json`.
 
 ### Scoring groups
+
+The page groups rows by model input. This does not imply shared evaluation
+pixels: the scoring protocols below can differ within either input group.
 
 Scores across these groups use different evaluation pixels and are not directly
 comparable.

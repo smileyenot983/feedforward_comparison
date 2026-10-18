@@ -98,7 +98,7 @@ function buildScenes() {
     $('thumbnails').append(button);
   }
 }
-function metricTable(rows, protocols) {
+function metricTable(rows) {
   const wrapper = node('div', undefined, 'metrics-scroll'), table = node('table');
   table.append(node('caption', 'Median across scenes'));
   const head = node('thead'), tr = node('tr');
@@ -106,18 +106,21 @@ function metricTable(rows, protocols) {
     const th = node('th', title); th.scope = 'col'; tr.append(th);
   }
   head.append(tr); table.append(head);
-  let body, previousProtocol;
+  let body, previousGroup;
   const format = (value, percent = false) => typeof value === 'number' && Number.isFinite(value) ? (value * (percent ? 100 : 1)).toFixed(2) + (percent ? '%' : '') : '—';
   for (const row of rows) {
-    if (row.protocol !== previousProtocol) {
-      body = node('tbody'); body.dataset.protocol = row.protocol;
-      const group = node('tr', undefined, 'metric-protocol'), heading = node('th');
-      heading.scope = 'rowgroup'; heading.colSpan = 6; heading.textContent = protocols[row.protocol];
-      group.append(heading); body.append(group); table.append(body);
-      previousProtocol = row.protocol;
+    const inputGroup = row.camera_conditioning === true ? 'co3d' : row.camera_conditioning === false ? 'rgb' : 'reference';
+    if (inputGroup !== previousGroup) {
+      body = node(inputGroup === 'reference' ? 'tfoot' : 'tbody'); body.dataset.inputGroup = inputGroup;
+      if (inputGroup !== 'reference') {
+        const group = node('tr', undefined, 'metric-group'), heading = node('th');
+        heading.scope = 'rowgroup'; heading.colSpan = 6; heading.textContent = inputGroup === 'rgb' ? 'RGB only' : 'CO3D cameras';
+        group.append(heading); body.append(group);
+      }
+      table.append(body); previousGroup = inputGroup;
     }
     const tr = node('tr'); tr.dataset.method = row.method;
-    const cells = [names[row.method],
+    const cells = [names[row.method].replace(/ \[(CO3D cameras|RGB only)\]/, ''),
       format(row.regions.foreground?.discrepancy, true), format(row.regions.background?.discrepancy, true),
       format(row.reference_discrepancy, true), format(row.inference_seconds), format(row.peak_allocated_gib)];
     cells.forEach(value => tr.append(node('td', value))); body.append(tr);
@@ -125,18 +128,10 @@ function metricTable(rows, protocols) {
   wrapper.append(table); return wrapper;
 }
 function buildMetrics() {
-  const commonOrder = [...gallery.primary, 'omega_own'];
-  const protocols = {
-    common: 'Shared scoring pixels',
-    map_rgb_only: names.map_rgb_only,
-    pi3x_rgb_only: names.pi3x_rgb_only,
-    ggpt_native: names.ggpt,
-    ggpt_rgb_only_native: names.ggpt_rgb_only,
-    ggpt_rgb_only_fast_native: names.ggpt_rgb_only_fast,
-    co3d_reference: 'Original CO3D reference'
-  };
-  const rows = [...commonOrder.map(key => gallery.aggregate.find(row => row.method === key)), ...gallery.aggregate.filter(row => row.protocol !== 'common')];
-  $('primary-metrics').append(metricTable(rows, protocols));
+  const rgb = ['pi3x_rgb_only', 'map_rgb_only', 'omega_own', 'omega', 'ggpt_rgb_only', 'ggpt_rgb_only_fast'];
+  const co3d = [...gallery.primary.filter(key => key !== 'omega'), 'ggpt'];
+  const rows = [...rgb, ...co3d, 'co3d_reference'].map(key => gallery.aggregate.find(row => row.method === key));
+  $('primary-metrics').append(metricTable(rows));
 }
 async function start() {
   const response = await fetch('gallery.json');

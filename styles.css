@@ -7,5 +7,7 @@ th{white-space:normal;min-width:76px}td:first-child{white-space:normal;min-width
 @media(max-width:640px){main,.masthead,footer{padding-left:16px;padding-right:16px}.masthead{gap:8px;min-height:46px;padding-top:8px;padding-bottom:8px}.brand span{display:none}.masthead nav{gap:14px;font-size:12px}.intro{padding-top:10px}.scene-bar{gap:8px;padding:8px 12px;justify-content:space-between;flex-wrap:wrap}.scene-picker{min-width:0;flex:1}.scene-picker select{min-width:0}.scene-buttons{gap:6px}.scene-buttons button{padding:3px 8px}.compare-controls{gap:12px;padding:8px 12px 4px}.region-control{order:3;flex-basis:100%;gap:10px}.region-control select{width:auto;margin:0}.thumbnails{grid-template-columns:repeat(4,1fr);gap:8px}.thumbnail span{font-size:10px;padding:4px}.method-links{grid-template-columns:repeat(2,1fr)}.viewer-footer{padding:12px}.eyebrow{font-size:10px;letter-spacing:1px}h2{font-size:22px}#viewer{height:800px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.thumbnail{transition:none}}
 
-.metric-protocol th{text-align:left;background:#22333f;padding:10px 12px;min-width:0}
+.metric-group th{text-align:left;background:#22333f;padding:10px 12px;min-width:0}
 .metric-key{font-size:12px;color:var(--muted);margin:12px 0 0}
+
+tfoot td{border-top:2px solid var(--line)}
