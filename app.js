@@ -4,10 +4,11 @@ const $ = id => document.getElementById(id);
 const storageKey = 'co3d-public-comparison-v1';
 let gallery, state, loadedScene, viewerReady = false;
 const names = {
-  pi3x: 'Pi3X', da3: 'DA3', pow3r: 'Pow3R (pairs)', map: 'MapAnything', omega: 'VGGT-Omega',
-  omega_own: 'VGGT-Omega · predicted cameras', map_rgb_only: 'MapAnything · RGB only',
-  pi3x_rgb_only: 'Pi3X · RGB only', ggpt: 'Pi3X + GGPT',
-  ggpt_rgb_only: 'Pi3X + GGPT · RGB only', ggpt_rgb_only_fast: 'Pi3X + GGPT · fast / RGB only',
+  pi3x: 'Pi3X [CO3D cameras]', da3: 'DA3 [CO3D cameras]', pow3r: 'Pow3R (pairs) [CO3D cameras]', map: 'MapAnything [CO3D cameras]',
+  omega: 'VGGT-Omega [RGB only] (CO3D placement)',
+  omega_own: 'VGGT-Omega [RGB only] (predicted placement)', map_rgb_only: 'MapAnything [RGB only]',
+  pi3x_rgb_only: 'Pi3X [RGB only]', ggpt: 'Pi3X + GGPT [CO3D cameras]',
+  ggpt_rgb_only: 'Pi3X + GGPT [RGB only]', ggpt_rgb_only_fast: 'Pi3X + GGPT (fast) [RGB only]',
   co3d_reference: 'Original CO3D'
 };
 const experimentNotes = {
@@ -131,11 +132,11 @@ function buildMetrics() {
   const commonOrder = [...gallery.primary, 'omega_own'];
   const protocols = {
     common: {title: 'Shared scoring pixels', note: 'Common 512 grid and intersection of the five primary model masks. Camera inputs differ. The two VGGT-Omega rows reuse one prediction.'},
-    map_rgb_only: {title: 'MapAnything · images-only scoring', note: 'Native grid and its own retained mask.'},
-    pi3x_rgb_only: {title: 'Pi3X · images-only scoring', note: 'Native grid; retained intersection with conditioned MapAnything / DA3 masks.'},
-    ggpt_native: {title: 'Pi3X + GGPT · known-camera scoring', note: 'Native XYZ rasterization and a three-variant common raster mask.'},
-    ggpt_rgb_only_native: {title: 'Pi3X + GGPT · images-only scoring', note: 'Native XYZ rasterization and its own three-variant common raster mask.'},
-    ggpt_rgb_only_fast_native: {title: 'Pi3X + GGPT · fast matcher scoring', note: 'Images only, with RoMaV2-fast; native XYZ rasterization and its own three-variant raster mask.'},
+    map_rgb_only: {title: names.map_rgb_only, note: 'Native grid and its own retained mask.'},
+    pi3x_rgb_only: {title: names.pi3x_rgb_only, note: 'Native grid; retained intersection with conditioned MapAnything / DA3 masks.'},
+    ggpt_native: {title: names.ggpt, note: 'Native XYZ rasterization and a three-variant common raster mask.'},
+    ggpt_rgb_only_native: {title: names.ggpt_rgb_only, note: 'Native XYZ rasterization and its own three-variant common raster mask.'},
+    ggpt_rgb_only_fast_native: {title: names.ggpt_rgb_only_fast, note: 'Images only, with RoMaV2-fast; native XYZ rasterization and its own three-variant raster mask.'},
     co3d_reference: {title: 'Original CO3D reference', note: 'Sparse original depths with their own validity mask. Object scores cover 20 scenes; background scores cover 18. These pixels differ from the dense predictions.'}
   };
   const rows = [...commonOrder.map(key => gallery.aggregate.find(row => row.method === key)), ...gallery.aggregate.filter(row => row.protocol !== 'common')];

@@ -4,7 +4,7 @@
 const embedded = new URLSearchParams(location.search).get('embed') === '1';
 document.documentElement.classList.toggle('embedded', embedded);
 const primaryMethods = ['pi3x', 'da3', 'pow3r', 'map', 'omega'];
-const publicNames = {pi3x:'Pi3X',da3:'DA3',pow3r:'Pow3R (pairs)',map:'MapAnything',omega:'VGGT-Omega',omega_own:'VGGT-Omega · predicted cameras',map_rgb_only:'MapAnything · RGB only',pi3x_rgb_only:'Pi3X · RGB only',ggpt:'Pi3X + GGPT',ggpt_rgb_only:'Pi3X + GGPT · RGB only',ggpt_rgb_only_fast:'Pi3X + GGPT · fast / RGB only'};
+const publicNames = {pi3x:'Pi3X [CO3D cameras]',da3:'DA3 [CO3D cameras]',pow3r:'Pow3R (pairs) [CO3D cameras]',map:'MapAnything [CO3D cameras]',omega:'VGGT-Omega [RGB only] (CO3D placement)',omega_own:'VGGT-Omega [RGB only] (predicted placement)',map_rgb_only:'MapAnything [RGB only]',pi3x_rgb_only:'Pi3X [RGB only]',ggpt:'Pi3X + GGPT [CO3D cameras]',ggpt_rgb_only:'Pi3X + GGPT [RGB only]',ggpt_rgb_only_fast:'Pi3X + GGPT (fast) [RGB only]'};
 const publicNotes = {omega:'Images only · shown with known cameras',omega_own:'Images only · estimates its cameras',map_rgb_only:'Images only · estimates its cameras',pi3x_rgb_only:'Images only · estimates its cameras',ggpt:'Images + known cameras · cameras refined',ggpt_rgb_only:'Images only · cameras refined',ggpt_rgb_only_fast:'Images only · fast matching, refined cameras'};
 if (embedded) {
   for (const side of ['left', 'right']) {
