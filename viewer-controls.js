@@ -19,17 +19,12 @@ $('color').querySelector('[value="view"]').textContent = 'By input image';
 $('color').parentElement.classList.add('color-control');
 $('frame').parentElement.classList.add('frame-control');
 if ($('cameras').nextSibling) $('cameras').nextSibling.textContent = ' Camera path';
-let includeExtras = requested.get('extras') === '1';
-for (const key of ['left', 'right']) {
-  if (requested.has(key) && data.clouds.some(cloud => cloud.method === requested.get(key)) && !primaryMethods.includes(requested.get(key))) includeExtras = true;
-}
 function refreshPublicMenus() {
   for (const id of ['leftModel', 'rightModel']) {
     const select = $(id), current = select.value;
     select.replaceChildren();
     const order = [...primaryMethods, ...data.clouds.map(cloud => cloud.method).filter(key => !primaryMethods.includes(key))];
     for (const key of order) {
-      if (!includeExtras && !primaryMethods.includes(key)) continue;
       const index = data.clouds.findIndex(cloud => cloud.method === key);
       if (index < 0) continue;
       const option = new Option(publicNames[key], String(index)); option.title = publicNotes[key] || 'Images + known cameras'; select.add(option);
@@ -52,7 +47,7 @@ function persistViewer() {
   url.searchParams.set('left', data.clouds[Number($('leftModel').value)].method);
   url.searchParams.set('right', data.clouds[Number($('rightModel').value)].method);
   url.searchParams.set('region', $('region').value);
-  url.searchParams.set('extras', includeExtras ? '1' : '0');
+  url.searchParams.delete('extras');
   history.replaceState(null, '', url);
 }
 refreshPublicMenus();
@@ -60,18 +55,13 @@ for (const id of ['leftModel', 'rightModel', 'region']) $(id).addEventListener('
 for (const id of ['left', 'right']) { $(id).setAttribute('aria-label', id + ' pointcloud, drag to rotate or scroll to zoom'); }
 const back = document.createElement('a'); back.className = 'public-back'; back.textContent = '← Back to comparison';
 back.href = '../../?scene=' + encodeURIComponent(data.scene); document.body.prepend(back);
-const extraLabel = document.createElement('label'); extraLabel.className = 'viewer-extra';
-const extraCheckbox = document.createElement('input'); extraCheckbox.type = 'checkbox'; extraCheckbox.checked = includeExtras;
-extraLabel.append(extraCheckbox, document.createTextNode(' Include additional experiments'));
-document.querySelector('body>details').append(extraLabel);
-extraCheckbox.addEventListener('change', () => { includeExtras = extraCheckbox.checked; refreshPublicMenus(); persistViewer(); schedule(); });
 window.addEventListener('message', event => {
   if (!embedded || event.source !== parent || event.origin !== location.origin || event.data?.type !== 'co3d-controls') return;
   const message = event.data;
-  includeExtras = Boolean(message.extras); refreshPublicMenus();
+  refreshPublicMenus();
   for (const [key, id] of [['left', 'leftModel'], ['right', 'rightModel']]) {
     const index = data.clouds.findIndex(cloud => cloud.method === message[key]);
-    if (index >= 0 && (includeExtras || primaryMethods.includes(message[key]))) $(id).value = String(index);
+    if (index >= 0) $(id).value = String(index);
   }
   $('region').value = message.region === 'all' ? 'all' : 'fg';
   refreshPublicContext(); persistViewer(); schedule();

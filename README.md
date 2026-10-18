@@ -5,8 +5,9 @@
 A standalone static comparison of Pi3X, Depth Anything 3, Pow3R, MapAnything and
 VGGT-Omega on 20 CO3D scenes with 10 views per scene. Includes synchronized WebGL
 pointclouds, scene thumbnails, shareable selections and saved
-metrics grouped by evaluation protocol. Additional RGB-only and GGPT variants
-are available in expandable controls.
+metrics grouped by evaluation protocol. All 11 variants, including RGB-only and
+GGPT results, are available directly in the main method selectors. All metric
+rows appear in one visible table, grouped by scoring settings.
 
 This is an exploratory saved experiment, not an official benchmark. Primary
 Pi3X, DA3, MapAnything and Pow3R received CO3D camera inputs. VGGT-Omega received

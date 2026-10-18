@@ -37,35 +37,31 @@ function readState(saved = {}) {
   const right = methods.includes(value('right')) ? value('right') : 'omega';
   return {
     scene: scenes.includes(value('scene')) ? value('scene') : scenes[0], left, right,
-    region: value('region') === 'all' ? 'all' : 'fg',
-    extras: String(value('extras')) === '1' || !gallery.primary.includes(left) || !gallery.primary.includes(right)
+    region: value('region') === 'all' ? 'all' : 'fg'
   };
 }
 function persist() {
   const params = new URLSearchParams({scene: state.scene, left: state.left, right: state.right, region: state.region});
-  if (state.extras) params.set('extras', '1');
   const url = new URL(location.href);
   url.search = params.toString();
   history.replaceState(null, '', url);
-  try { localStorage.setItem(storageKey, JSON.stringify({...state, extras: state.extras ? '1' : '0'})); } catch {}
+  try { localStorage.setItem(storageKey, JSON.stringify(state)); } catch {}
 }
 function fillMethodMenus() {
   const methods = [...gallery.primary, ...gallery.methods.map(item => item.key).filter(key => !gallery.primary.includes(key))];
   for (const side of ['left', 'right']) {
     const select = $(side + '-method'); select.replaceChildren();
     for (const key of methods) {
-      if (!state.extras && !gallery.primary.includes(key)) continue;
       const option = new Option(names[key], key); option.title = note(key); select.add(option);
     }
     select.value = state[side];
     $(side + '-context').textContent = note(state[side]);
   }
   $('region').value = state.region;
-  $('include-extras').checked = state.extras;
 }
 function viewerUrl(embed = false) {
   const url = new URL(`${state.scene}/viewer.html`, location.href);
-  url.search = new URLSearchParams({left: state.left, right: state.right, region: state.region, extras: state.extras ? '1' : '0', ...(embed ? {embed: '1'} : {})}).toString();
+  url.search = new URLSearchParams({left: state.left, right: state.right, region: state.region, ...(embed ? {embed: '1'} : {})}).toString();
   return url;
 }
 function syncViewer() {
@@ -75,7 +71,7 @@ function syncViewer() {
     $('viewer-loading').hidden = false;
     $('viewer').src = viewerUrl(true).href;
   } else if (viewerReady) {
-    $('viewer').contentWindow.postMessage({type: 'co3d-controls', left: state.left, right: state.right, region: state.region, extras: state.extras}, location.origin);
+    $('viewer').contentWindow.postMessage({type: 'co3d-controls', left: state.left, right: state.right, region: state.region}, location.origin);
   }
 }
 function render() {
@@ -101,7 +97,7 @@ function buildScenes() {
     $('thumbnails').append(button);
   }
 }
-function metricTable(rows) {
+function metricTable(rows, protocols) {
   const wrapper = node('div', undefined, 'metrics-scroll'), table = node('table');
   table.append(node('caption', 'Aggregate saved scores · scene-balanced medians'));
   const head = node('thead'), tr = node('tr');
@@ -109,9 +105,17 @@ function metricTable(rows) {
     const th = node('th', title); th.scope = 'col'; tr.append(th);
   }
   head.append(tr); table.append(head);
-  const body = node('tbody');
+  let body, previousProtocol;
   const format = (value, percent = false) => typeof value === 'number' && Number.isFinite(value) ? (value * (percent ? 100 : 1)).toFixed(2) + (percent ? '%' : '') : '—';
   for (const row of rows) {
+    if (row.protocol !== previousProtocol) {
+      body = node('tbody'); body.dataset.protocol = row.protocol;
+      const group = node('tr', undefined, 'metric-protocol'), heading = node('th');
+      heading.scope = 'rowgroup'; heading.colSpan = 9;
+      heading.append(node('span', protocols[row.protocol].title), node('span', protocols[row.protocol].note, 'protocol-note'));
+      group.append(heading); body.append(group); table.append(body);
+      previousProtocol = row.protocol;
+    }
     const tr = node('tr'); tr.dataset.method = row.method;
     const input = row.camera_conditioning === true ? 'Images + cameras' : row.camera_conditioning === false ? 'Images only' : 'Reference data';
     const cameras = row.camera_source === 'CO3D' ? 'Provided (CO3D)' : row.camera_source === 'predicted' ? 'Predicted' : /refined/i.test(row.camera_source) ? 'Refined' : row.camera_source;
@@ -121,27 +125,21 @@ function metricTable(rows) {
       `${row.scored_scenes.foreground} / ${row.scored_scenes.background}`];
     cells.forEach(value => tr.append(node('td', value))); body.append(tr);
   }
-  table.append(body); wrapper.append(table); return wrapper;
+  wrapper.append(table); return wrapper;
 }
 function buildMetrics() {
   const commonOrder = [...gallery.primary, 'omega_own'];
-  $('primary-metrics').append(metricTable(commonOrder.map(key => gallery.aggregate.find(row => row.method === key))));
-  const notes = {
-    map_rgb_only: 'Native grid and its own retained mask.',
-    pi3x_rgb_only: 'Native grid; retained intersection with conditioned MapAnything / DA3 masks.',
-    ggpt_native: 'Camera-conditioned GGPT; native XYZ rasterization and a three-variant common raster mask.',
-    ggpt_rgb_only_native: 'RGB-only GGPT; native XYZ rasterization and its own three-variant common raster mask.',
-    ggpt_rgb_only_fast_native: 'RGB-only GGPT with RoMaV2-fast; native XYZ rasterization and its own three-variant raster mask.',
-    co3d_reference: 'Sparse original CO3D depths on their native validity mask. Object scores cover 20 scenes; background scores cover 18. These pixels differ from the dense predictions.'
+  const protocols = {
+    common: {title: 'Shared scoring pixels', note: 'Common 512 grid and intersection of the five primary model masks. Camera inputs differ. The two VGGT-Omega rows reuse one prediction.'},
+    map_rgb_only: {title: 'MapAnything · images-only scoring', note: 'Native grid and its own retained mask.'},
+    pi3x_rgb_only: {title: 'Pi3X · images-only scoring', note: 'Native grid; retained intersection with conditioned MapAnything / DA3 masks.'},
+    ggpt_native: {title: 'Pi3X + GGPT · known-camera scoring', note: 'Native XYZ rasterization and a three-variant common raster mask.'},
+    ggpt_rgb_only_native: {title: 'Pi3X + GGPT · images-only scoring', note: 'Native XYZ rasterization and its own three-variant common raster mask.'},
+    ggpt_rgb_only_fast_native: {title: 'Pi3X + GGPT · fast matcher scoring', note: 'Images only, with RoMaV2-fast; native XYZ rasterization and its own three-variant raster mask.'},
+    co3d_reference: {title: 'Original CO3D reference', note: 'Sparse original depths with their own validity mask. Object scores cover 20 scenes; background scores cover 18. These pixels differ from the dense predictions.'}
   };
-  const groups = new Map();
-  for (const row of gallery.aggregate.filter(row => row.protocol !== 'common')) {
-    if (!groups.has(row.protocol)) groups.set(row.protocol, []);
-    groups.get(row.protocol).push(row);
-  }
-  for (const [protocol, rows] of groups) {
-    $('extra-metrics').append(node('h3', names[rows[0].method]), node('p', notes[protocol], 'protocol-note'), metricTable(rows));
-  }
+  const rows = [...commonOrder.map(key => gallery.aggregate.find(row => row.method === key)), ...gallery.aggregate.filter(row => row.protocol !== 'common')];
+  $('primary-metrics').append(metricTable(rows, protocols));
 }
 async function start() {
   const response = await fetch('gallery.json');
@@ -157,14 +155,6 @@ async function start() {
   }
   for (const side of ['left', 'right']) $(side + '-method').addEventListener('change', event => { state[side] = event.target.value; render(); });
   $('region').addEventListener('change', event => { state.region = event.target.value; render(); });
-  $('include-extras').addEventListener('change', event => {
-    state.extras = event.target.checked;
-    if (!state.extras) {
-      if (!gallery.primary.includes(state.left)) state.left = 'pi3x';
-      if (!gallery.primary.includes(state.right)) state.right = 'omega';
-    }
-    render();
-  });
   $('copy-link').addEventListener('click', async () => {
     try { await navigator.clipboard.writeText(location.href); $('copy-status').textContent = 'Link copied'; }
     catch { $('copy-status').textContent = 'Copy the URL from your browser’s address bar.'; }

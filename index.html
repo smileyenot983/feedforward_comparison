@@ -16,7 +16,7 @@
   </header>
   <main>
     <section class="intro">
-      <p class="eyebrow">20 scenes · 10 views each · 5 methods</p>
+      <p class="eyebrow">20 scenes · 10 views each · 11 model variants</p>
       <h1>CO3D reconstruction comparison</h1>
       <p>Drag either cloud to rotate both views.</p>
     </section>
@@ -37,7 +37,6 @@
         <iframe id="viewer" title="Synchronized left and right pointcloud comparison" src="about:blank" allow="fullscreen"></iframe>
       </div>
       <div class="viewer-footer"><p>Drag to rotate · Shift + drag to pan · Scroll to zoom. Object-only display hides background points.</p><div><a id="standalone" target="_blank" rel="noopener">Open full viewer ↗</a><button id="copy-link">Copy comparison link</button><span id="copy-status" role="status"></span></div></div>
-      <details class="extra-options"><summary>Additional experiments</summary><label><input type="checkbox" id="include-extras"> Include RGB-only, alternate-camera and GGPT variants in the method menus</label><p>These variants use different inputs or evaluation pixels. Their scores appear in separate protocol groups below.</p></details>
       <p id="error" role="alert" hidden></p>
       <noscript><p>This interactive pointcloud comparison requires JavaScript.</p></noscript>
     </section>
@@ -51,14 +50,13 @@
       <div class="section-heading"><h2 id="metrics-heading">Reconstruction metrics</h2><a href="metrics.json" download>Download all scores ↓</a></div>
       <p>Results across 20 scenes. Lower errors are better. “Object” means the foreground object; “background” means the rest of the image.</p>
       <div class="callout"><strong>Check what each model received.</strong> Some methods use images plus known cameras; others use images alone. Disagreement measures how well views match each other. Depth error measures how closely predictions match CO3D reference depths.</div>
-      <h3>Main comparison</h3>
-      <p class="muted">All six configurations are scored on the same pixels. The two VGGT-Omega rows reuse one prediction, placed using different cameras.</p>
+      <h3>All methods and variants</h3>
+      <p class="muted">Rows are grouped by scoring settings. Different groups use different pixels, so their scores are not directly comparable.</p>
       <div id="primary-metrics"></div>
-      <details class="advanced-metrics"><summary>Additional experiments & original CO3D depths</summary><p>These groups use different scoring pixels or settings. Compare scores within each group.</p><div id="extra-metrics"></div></details>
       <details><summary>Metric definitions & aggregation</summary><dl class="definitions">
         <dt>Object / background disagreement</dt><dd>Relative cross-view depth disagreement in foreground / background, including occluded points. This is consistency between predictions; views can agree even when the reconstructed shape is wrong.</dd>
         <dt>Object depth error</dt><dd>Relative difference |prediction − reference| / reference on valid foreground CO3D depth pixels. These COLMAP reference depths can contain errors.</dd>
-        <dt>Scoring pixels</dt><dd>The main table uses a common 512 evaluation grid and the intersection of the five primary model masks. Additional experiments use the separate masks or grids described in each group.</dd>
+        <dt>Scoring pixels</dt><dd>The shared-pixel group uses a common 512 evaluation grid and the intersection of the five primary model masks. The other groups use the separate masks or grids described in their headings.</dd>
         <dt>Model input / cameras used</dt><dd>Model input lists what entered inference. Cameras used lists the cameras that place the predicted points in the scene. Known or provided cameras come from CO3D; predicted cameras come from the model.</dd>
         <dt>Aggregation</dt><dd>Scene-balanced median of per-scene medians. Reference error uses frame medians within each scene. Scenes without a valid score are omitted; object / background scene counts are shown for each row.</dd>
         <dt>Runtime / memory</dt><dd>Saved inference runtime and peak allocated GPU memory. Grids and execution paths differ; these measurements are indicative. GGPT runtime includes Pi3X, matching, camera optimization and refinement.</dd>
@@ -76,7 +74,7 @@
         <a href="https://github.com/facebookresearch/map-anything">MapAnything <span>Official code ↗</span></a>
         <a href="https://github.com/facebookresearch/vggt-omega">VGGT-Omega <span>Official code ↗</span></a>
       </div>
-      <div class="protocol-grid"><div><h3>Known and predicted cameras</h3><p>Known cameras provide each image’s camera position, orientation and calibration from CO3D. Primary Pi3X, DA3, MapAnything and pairwise Pow3R runs received these along with the images. VGGT-Omega received images alone: its primary cloud uses known cameras to place the predicted depths, while its alternate cloud uses predicted cameras.</p></div><div><h3>Pointcloud display</h3><p>Clouds combine points from the selected views without surface fusion or smoothing. All methods share one scene display transform, scale and viewpoint. Object-only display hides background points. Each method retains its saved geometry-validity mask.</p></div></div>
+      <div class="protocol-grid"><div><h3>Known and predicted cameras</h3><p>Known cameras provide each image’s camera position, orientation and calibration from CO3D. Camera-conditioned Pi3X, DA3, MapAnything and pairwise Pow3R runs received these along with the images. Images-only variants estimate their cameras. VGGT-Omega received images alone: one cloud uses known cameras to place the predicted depths, while the other uses predicted cameras.</p></div><div><h3>Pointcloud display</h3><p>Clouds combine points from the selected views without surface fusion or smoothing. All methods share one scene display transform, scale and viewpoint. Object-only display hides background points. Each method retains its saved geometry-validity mask.</p></div></div>
       <details><summary>Sampling & evaluation details</summary><p>Clouds were sampled at stride 3 and capped at 60,000 foreground and 20,000 background points per method. These display samples are separate from the evaluation pixels. Use Fit scene in the viewer to inspect distant points.</p><p>RGB-only MapAnything and Pi3X predict their own cameras; CO3D cameras are used afterward for a single similarity alignment and evaluation. GGPT refines Pi3X with matching and camera optimization, retaining corrected XYZ. Its camera-conditioned, RGB-only and fast-matcher variants have separate retained-pixel intersections.</p><p>This public export preserves the original experiment’s pointclouds and scores. It does not substitute later 30-view preprocessing or filtering results.</p></details>
     </section>
   </main>
